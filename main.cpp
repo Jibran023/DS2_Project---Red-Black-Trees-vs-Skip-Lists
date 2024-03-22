@@ -5,6 +5,8 @@
 #include <vector>
 
 
+// #include <bits/stdc++.h>
+#include "RBTree.cpp"
 
 bool isIgnoredChar(char c) {
     // Define characters to ignore here
@@ -14,7 +16,7 @@ bool isIgnoredChar(char c) {
 }
 
 int main(){
-    
+    RBTree tree;
     // Open the input file
     std::ifstream inputFile("letters_100.txt");
 
@@ -41,11 +43,10 @@ int main(){
                     int asciiValue = static_cast<int>(c);
                     word_asci+=asciiValue;
                 }
-                
-
-
+        
             }
             std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
+            tree.insertValue(word_asci,word);
         }
 
         // Print each word
