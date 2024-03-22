@@ -6,6 +6,13 @@
 
 
 
+bool isIgnoredChar(char c) {
+    // Define characters to ignore here
+    return c == '(' || c == ')' || c=='{' || c=='}' || c=='[' || c==']' || c==',' 
+        || c == '@' || c == '#' || c=='$' || c=='%' || c=='^'  || c=='*'
+            || c=='!' || c == '.' || (c >= '0' && c <= '9');
+}
+
 int main(){
     
     // Open the input file
@@ -30,8 +37,11 @@ int main(){
             int word_asci=0;
             for (char c : word) {
                 // std::cout << c << " ";
-                int asciiValue = static_cast<int>(c);
-                word_asci+=asciiValue;
+                if (!isIgnoredChar(c)){
+                    int asciiValue = static_cast<int>(c);
+                    word_asci+=asciiValue;
+                }
+                
 
 
             }
