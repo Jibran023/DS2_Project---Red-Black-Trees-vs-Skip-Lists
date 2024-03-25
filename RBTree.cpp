@@ -7,6 +7,8 @@
 #include <utility>
 using namespace std;
 
+// 
+
 Node::Node(int data,std::string inp_word) {
     this->data = data;
     color = RED;
@@ -266,11 +268,13 @@ void RBTree::inorderBST(Node *&ptr) {
         return;
 
     inorderBST(ptr->left);
-    cout << ptr->data << " " << ptr->color << endl;
+    // cout << ptr->data << " " << ptr->color << endl;
+    cout<<"ASCI value is: "<<ptr->data<<" and the word stored is: "<<ptr->word<<endl;
     inorderBST(ptr->right);
 }
 
 void RBTree::inorder() {
+    cout<<"STARTING TRAVERSAL "<<endl;
     inorderBST(root);
 }
 

@@ -35,7 +35,7 @@ int main(){
         
         std::string word;
         while (iss >> word) {
-            std::cout<<"the word is: "<<word<<std::endl;
+            // std::cout<<"the word is: "<<word<<std::endl;
             int word_asci=0;
             for (char c : word) {
                 // std::cout << c << " ";
@@ -45,7 +45,7 @@ int main(){
                 }
         
             }
-            std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
+            // std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
             tree.insertValue(word_asci,word);
         }
 
@@ -53,6 +53,8 @@ int main(){
         std::cout << "Words: ";
         
     }
+
+    tree.inorder();
 
     // Close the file
     inputFile.close();

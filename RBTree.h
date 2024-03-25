@@ -7,6 +7,7 @@
 
 enum Color {RED, BLACK, DOUBLE_BLACK};
 
+
 struct Node
 {
     int data;
@@ -19,8 +20,8 @@ struct Node
 
 class RBTree
 {
-    private:
-        Node *root;
+    
+        
     protected:
         void rotateLeft(Node *&);
         void rotateRight(Node *&);
@@ -36,12 +37,14 @@ class RBTree
         Node* deleteBST(Node *&, int);
         int getBlackHeight(Node *);
     public:
+        Node *root;
         RBTree();
         void insertValue(int,std::string);
         void deleteValue(int);
         void merge(RBTree);
         void inorder();
         void preorder();
+
 };
 
 
