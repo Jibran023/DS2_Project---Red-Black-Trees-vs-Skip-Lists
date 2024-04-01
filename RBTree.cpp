@@ -5,6 +5,7 @@
 #include <iostream>
 #include "RBTree.h"
 #include <utility>
+#include <chrono>
 using namespace std;
 
 // 
@@ -320,6 +321,69 @@ int RBTree::getBlackHeight(Node *node) {
     }
     return blackheight;
 }
+
+
+
+Node* RBTree::search(const std::string& inp_word) {
+    auto start = std::chrono::steady_clock::now(); // Start the timer
+
+    // Calculate the ASCII value of the input string
+    double n = 2000;
+    int asciiValue = 0;
+    for (char c : inp_word) {
+        asciiValue += static_cast<int>(c);
+    }
+
+    // Start searching from the root
+    Node* current = root;
+
+    // Traverse the tree to find the node with the matching ASCII value
+    while (current != nullptr) {
+        // Calculate the ASCII value of the word stored in the current node
+        int currentNodeAsciiValue = 0;
+        for (char c : current->word) {
+            currentNodeAsciiValue += static_cast<int>(c);
+        }
+
+        // Compare the calculated ASCII values
+        if (asciiValue == currentNodeAsciiValue) {
+            // Stop the timer
+            auto end = std::chrono::steady_clock::now();
+            // Calculate the duration in nanoseconds
+            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+            // Print the time taken
+            
+            // Return the node if found
+            std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
+            std::cout << "our Search time: " << duration.count() << " nanoseconds" << std::endl;
+            std::cout<<"expected time is: "<<  std::log10(n) * 1e9<<std::endl;
+
+            return current;
+        } else if (asciiValue < currentNodeAsciiValue) {
+            // If the input ASCII value is less than the current node's value, move to the left child
+            current = current->left;
+        } else {
+            // If the input ASCII value is greater than the current node's value, move to the right child
+            current = current->right;
+        }
+    }
+
+    // Stop the timer
+    auto end = std::chrono::steady_clock::now();
+    // Calculate the duration in nanoseconds
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    // Print the time taken
+    std::cout << "Search time: " << duration.count() << " nanoseconds" << std::endl;
+    // Print a message indicating the word was not found
+    std::cout << "Couldn't find the word, returning nullptr!" << std::endl;
+    // Return nullptr if the node with the input ASCII value is not found in the tree
+    return nullptr;
+}
+
+   
+
+
+
 
 // Test case 1 : 5 2 9 1 6 8 0 20 30 35 40 50 0
 // Test case 2 : 3 0 5 0

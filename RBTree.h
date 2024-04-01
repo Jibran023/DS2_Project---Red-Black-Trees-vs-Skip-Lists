@@ -41,9 +41,10 @@ class RBTree
         RBTree();
         void insertValue(int,std::string);
         void deleteValue(int);
-        void merge(RBTree);
+        // void merge(RBTree);
         void inorder();
         void preorder();
+        Node* search(const std::string& inp_word);
 
 };
 

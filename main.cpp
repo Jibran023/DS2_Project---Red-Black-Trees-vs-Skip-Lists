@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <cmath>
+
 
 
 // #include <bits/stdc++.h>
@@ -18,7 +20,7 @@ bool isIgnoredChar(char c) {
 int main(){
     RBTree tree;
     // Open the input file
-    std::ifstream inputFile("letters_100.txt");
+    std::ifstream inputFile("unique_words.txt");
 
     if (!inputFile.is_open()) {
         std::cerr << "Error opening the file." << std::endl;
@@ -28,7 +30,6 @@ int main(){
     std::string line;
     while (std::getline(inputFile, line)) {
         // Print the original line
-        std::cout << "Line: " << line << std::endl;
 
         // Tokenize the line into words
         std::istringstream iss(line);
@@ -55,6 +56,8 @@ int main(){
     }
 
     tree.inorder();
+
+    Node* returned_node=tree.search("Metoche"); //disordinance Magnetizable have asci values 1235
 
     // Close the file
     inputFile.close();
