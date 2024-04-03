@@ -1,3 +1,3 @@
 for compiling:  g++ main.cpp -o a.exe
 
-for running: a.exe
+for running: .\a.exe

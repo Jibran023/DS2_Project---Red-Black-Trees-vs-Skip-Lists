@@ -15,7 +15,7 @@ struct Node
     Node *left, *right, *parent;
     std::string word;
 
-    explicit Node(int,std::string);
+    explicit Node(int,std::string);  //cannot be used for implicit conversions,stops the computer from using this function automatically in certain situations.
 };
 
 class RBTree
