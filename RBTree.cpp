@@ -1,31 +1,30 @@
-//
-// Red Black Tree Implementation
-//
-// #include <bits/stdc++.h>
 #include <iostream>
 #include "RBTree.h"
 #include <utility>// For swap function
 #include <chrono> //for measuring the time intervals
 using namespace std;
 
-// 
+
 
 Node* sentinal_node = nullptr;
 
 
-Node::Node(int data,std::string inp_word) { //constructor for a node
+Node::Node(int data,std::string inp_word) //constructor for a node
+{ 
     this->data = data;
     color = RED;
     parent = nullptr; //Initialize parent pointers as nullptr
-    left = right =sentinal_node;  //making the left and right pointer point to the sentinal
+    left = right = sentinal_node;  //making the left and right pointer point to the sentinal
     word=inp_word;
 }
 
-RBTree::RBTree() { //constructor for the RBTree class
+RBTree::RBTree() //constructor for the RBTree class 
+{ 
     root = nullptr;
 }
 
-int RBTree::getColor(Node *&node) {
+int RBTree::getColor(Node *&node) 
+{
     if (node == nullptr)
         return BLACK; // If node is nullptr, it's considered black
 
@@ -150,7 +149,7 @@ void RBTree::fixInsertRBTree(Node *&ptr)
         {
             // Get the uncle of the current node
             Node *uncle = grandparent->right;//uncle is the sibling of the current node's parent
-            //f the uncle is red, it indicates a violation of the Red-Black Tree properties
+            // if the uncle is red, it indicates a violation of the Red-Black Tree properties
 
             //so first we Check if uncle is red
             if (getColor(uncle) == RED) 
