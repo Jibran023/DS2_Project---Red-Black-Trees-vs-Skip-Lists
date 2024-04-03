@@ -57,7 +57,7 @@ int main(){
 
     tree.inorder();
 
-    Node* returned_node=tree.search("Kishimoto"); //disordinance Magnetizable have asci values 1235
+    Node* returned_node=tree.search("designed"); //disordinance Magnetizable have asci values 1235
     std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
     // Close the file
     inputFile.close();
