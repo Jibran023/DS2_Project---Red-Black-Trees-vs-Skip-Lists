@@ -1,1 +1,3 @@
 Database: https://github.com/benjihillard/English-Dictionary-Database
+
+Theory for Red Black Trees: https://dl.ebooksworld.ir/books/Introduction.to.Algorithms.4th.Leiserson.Stein.Rivest.Cormen.MIT.Press.9780262046305.EBooksWorld.ir.pdf

@@ -2,6 +2,7 @@
 #include "RBTree.h"
 #include <utility>// For swap function
 #include <chrono> //for measuring the time intervals
+#include <cmath>
 using namespace std;
 
 
