@@ -9,6 +9,30 @@ using namespace std;
 
 Node* sentinal_node = nullptr;
 
+void RBTree::print_words_on_node(Node*& node){
+    std::cout<<"now printing the words on this node"<<std::endl;
+    for (const auto& word : node->words) {
+        std::cout << word << " ";
+    }
+    std::cout << std::endl;
+}
+
+Node* RBTree::GetTargetNode(int inp_asci) {
+    Node* current = root;
+    while (current != nullptr) {
+        if (current->data == inp_asci) {
+            return current; // Found the node
+        } else if (current->data < inp_asci) {
+            current = current->right; // Move to the right child
+        } else {
+            current = current->left; // Move to the left child
+        }
+    }
+    std::cout<<"couldnt find the node with the asci value "<<inp_asci<<std::endl;
+    return nullptr; // Node not found
+}
+
+
 
 Node::Node(int data,std::string inp_word) //constructor for a node
 { 
@@ -58,6 +82,8 @@ Node* RBTree::insertBST(Node *&root, Node *&ptr) {
 void RBTree::insertValue(int n,std::string inp_word) 
 {
     Node *node = new Node(n,inp_word);
+    node->words.push_back(inp_word);
+    // std::cout<<
     root = insertBST(root, node);
     fixInsertRBTree(node); // After insertion, fixing the Red Black Tree properties
     std::cout<<"oki insertion done! asci value: "<<n<<" word: "<<inp_word<<std::endl;
@@ -139,7 +165,7 @@ void RBTree::fixInsertRBTree(Node *&ptr)
     Node *grandparent = nullptr;
     
     // Continue loop until the current node is not the root and both the current node and its parent are red
-    while (ptr != root && getColor(ptr) == RED && getColor(ptr->parent) == RED) 
+    while (ptr != root && getColor(ptr) == RED && getColor(ptr->parent) == RED) //ptr is the current node
     {
         // Update parent and grandparent nodes
         parent = ptr->parent;
@@ -155,12 +181,12 @@ void RBTree::fixInsertRBTree(Node *&ptr)
             //so first we Check if uncle is red
             if (getColor(uncle) == RED) 
             {
-                // Case 1: Uncle is red
+                // Case 1: Uncle is red, violation of properites so we recolor
                 // Recolor parent, uncle, and grandparent
                 setColor(uncle, BLACK);
                 setColor(parent, BLACK);
                 setColor(grandparent, RED);
-                // Move up to grandparent
+                // Move up to grandparent to check for violations upwards   
                 ptr = grandparent;
             } 
             else 
@@ -242,34 +268,6 @@ void RBTree::inorder() {
 
 
 
-Node *RBTree::minValueNode(Node *&node) {
-
-    Node *ptr = node;
-
-    while (ptr->left != sentinal_node)
-        ptr = ptr->left;
-
-    return ptr;
-}
-
-Node* RBTree::maxValueNode(Node *&node) {
-    Node *ptr = node;
-
-    while (ptr->right != sentinal_node)
-        ptr = ptr->right;
-
-    return ptr;
-}
-
-int RBTree::getBlackHeight(Node *node) {
-    int blackheight = 0;
-    while (node != nullptr) {
-        if (getColor(node) == BLACK)
-            blackheight++;
-        node = node->left;
-    }
-    return blackheight;
-}
 
 
 
@@ -277,7 +275,7 @@ Node* RBTree::search(const std::string& inp_word) {
     auto start = std::chrono::steady_clock::now(); // Start the timer
 
     // Calculate the ASCII value of the input string
-    double n = 2000;
+    double n = 17; //numbre of nodes
     int asciiValue = 0;
     for (char c : inp_word) {
         asciiValue += static_cast<int>(c);

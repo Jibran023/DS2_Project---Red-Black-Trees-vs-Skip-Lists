@@ -2,6 +2,7 @@
 // Red Black Tree Definition
 //
 #include <iostream>
+#include <vector>
 #ifndef RED_BLACK_TREE_RBTREE_H
 #define RED_BLACK_TREE_RBTREE_H
 
@@ -10,10 +11,11 @@ enum Color {RED, BLACK, DOUBLE_BLACK};
 
 struct Node
 {
-    int data;
-    int color;
+    int data; 
+    int color;//red=0 , black =1
     Node *left, *right, *parent;
     std::string word;
+    std::vector<std::string> words;
 
     explicit Node(int,std::string);  //explicit means: cannot be used for implicit conversions,stops the computer from using this function automatically in certain situations.
 };
@@ -29,10 +31,7 @@ class RBTree
         
         int getColor(Node *&);
         void setColor(Node *&, int);
-        Node *minValueNode(Node *&);
-        Node *maxValueNode(Node *&);
         Node* insertBST(Node *&, Node *&);
-        int getBlackHeight(Node *);
     public:
         Node *root;
         RBTree();
@@ -41,6 +40,8 @@ class RBTree
         void inorder();
         
         Node* search(const std::string& inp_word);
+        Node* GetTargetNode(int asci);
+        void print_words_on_node(Node*&  node);
 
 };
 

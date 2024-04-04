@@ -11,7 +11,7 @@
 #include "RBTree.cpp"
 
 bool isIgnoredChar(char c) {
-    // Define characters to ignore here
+    // Defining the characters to ignore here
     return c == '(' || c == ')' || c=='{' || c=='}' || c=='[' || c==']' || c==',' 
         || c == '@' || c == '#' || c=='$' || c=='%' || c=='^'  || c=='*'
             || c=='!' || c == '.' || (c >= '0' && c <= '9');
@@ -20,7 +20,7 @@ bool isIgnoredChar(char c) {
 int main(){
     RBTree tree;
     // Open the input file
-    std::ifstream inputFile("letters_100.txt");
+    std::ifstream inputFile("sample_unique_words.txt");
 
     if (!inputFile.is_open()) {
         std::cerr << "Error opening the file." << std::endl;
@@ -46,8 +46,15 @@ int main(){
                 }
         
             }
+            Node* returned_node=tree.GetTargetNode(word_asci);//will check if the node with this asci value exists or not
+            if(returned_node!=nullptr){
+                returned_node->words.push_back(word);
+            }
+            else{
+                tree.insertValue(word_asci,word);
+            
+            }
             // std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
-            tree.insertValue(word_asci,word);
         }
 
         // Print each word
@@ -57,8 +64,10 @@ int main(){
 
     tree.inorder();
 
-    Node* returned_node=tree.search("designed"); //disordinance Magnetizable have asci values 1235
-    std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
+    Node* returned_node=tree.search("god"); //disordinance Magnetizable have asci values 1235
+    // std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
+    tree.print_words_on_node(returned_node);
+    
     // Close the file
     inputFile.close();
 
