@@ -42,6 +42,8 @@ class RBTree
         Node* search(const std::string& inp_word);
         Node* GetTargetNode(int asci);
         void print_words_on_node(Node*&  node);
+        int GetTreeHeight();
+        int GetTreeHeightHelper(Node* node);
 
 };
 

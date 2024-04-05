@@ -9,6 +9,24 @@ using namespace std;
 
 Node* sentinal_node = nullptr;
 
+int RBTree::GetTreeHeightHelper(Node* node) {
+    if (node == nullptr)
+        return 0;
+
+    int leftHeight = GetTreeHeightHelper(node->left); // Height of the left subtree
+    int rightHeight = GetTreeHeightHelper(node->right); // Height of the right subtree
+
+    // Return the maximum of leftHeight and rightHeight, plus 1 for the current node
+    std::cout<<"The height of tree: " <<std::max(leftHeight, rightHeight) + 1<< std::endl;
+    return std::max(leftHeight, rightHeight) + 1;
+}
+
+int RBTree::GetTreeHeight() {
+    // Start the traversal from the root node
+    return GetTreeHeightHelper(root);
+}
+
+
 void RBTree::print_words_on_node(Node*& node){
     std::cout<<"now printing the words on this node"<<std::endl;
     for (const auto& word : node->words) {
@@ -275,7 +293,7 @@ Node* RBTree::search(const std::string& inp_word) {
     auto start = std::chrono::steady_clock::now(); // Start the timer
 
     // Calculate the ASCII value of the input string
-    double n = 17; //numbre of nodes
+    double n = GetTreeHeight(); //numbre of nodes
     int asciiValue = 0;
     for (char c : inp_word) {
         asciiValue += static_cast<int>(c);
