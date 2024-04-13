@@ -20,7 +20,7 @@ bool isIgnoredChar(char c) {
 int main(){
     RBTree tree;
     // Open the input file
-    std::ifstream inputFile("sample_unique_words.txt");
+    std::ifstream inputFile("unique_words.txt");
 
     if (!inputFile.is_open()) {
         std::cerr << "Error opening the file." << std::endl;
@@ -62,11 +62,24 @@ int main(){
         
     }
 
-    tree.inorder();
+    
 
-    Node* returned_node=tree.search("god"); //disordinance Magnetizable have asci values 1235
+    // tree.inorder();
+
+    Node* returned_node=tree.search("Tomboy"); //disordinance Magnetizable have asci values 1235
     // std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
     tree.print_words_on_node(returned_node);
+    tree.deleteWord("Tomboy");
+    tree.deleteWord("Sumner");
+
+
+    
+    //by now the node should be deleted so searching for dog should give error
+    Node* returned_node2=tree.search("Tomboy");    
+    // tree.inorder();
+
+    tree.print_words_on_node(returned_node2);
+    
     
     // Close the file
     inputFile.close();

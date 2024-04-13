@@ -17,7 +17,7 @@ int RBTree::GetTreeHeightHelper(Node* node) {
     int rightHeight = GetTreeHeightHelper(node->right); // Height of the right subtree
 
     // Return the maximum of leftHeight and rightHeight, plus 1 for the current node
-    std::cout<<"The height of tree: " <<std::max(leftHeight, rightHeight) + 1<< std::endl;
+    // std::cout<<"The height of tree: " <<std::max(leftHeight, rightHeight) + 1<< std::endl;
     return std::max(leftHeight, rightHeight) + 1;
 }
 
@@ -295,9 +295,14 @@ Node* RBTree::search(const std::string& inp_word) {
     // Calculate the ASCII value of the input string
     double n = GetTreeHeight(); //numbre of nodes
     int asciiValue = 0;
+    std::cout<<"search function: asci value before calculation: "<<asciiValue<<std::endl;
+
     for (char c : inp_word) {
         asciiValue += static_cast<int>(c);
     }
+    std::cout<<"search function: asci value after calculation: "<<asciiValue<<std::endl;
+
+
 
     // Start searching from the root
     Node* current = root;
@@ -305,14 +310,15 @@ Node* RBTree::search(const std::string& inp_word) {
     // Traverse the tree to find the node with the matching ASCII value
     while (current != nullptr) {
         // Calculate the ASCII value of the word stored in the current node
-        int currentNodeAsciiValue = 0;
-        for (char c : current->word) {
-            currentNodeAsciiValue += static_cast<int>(c);
-        }
+        int currentNodeAsciiValue = current->data;
+        // for (char c : current->word) {
+        //     currentNodeAsciiValue += static_cast<int>(c);
+        // }
 
         // Compare the calculated ASCII values
         if (asciiValue == currentNodeAsciiValue) {
             // Stop the timer
+            std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
             auto end = std::chrono::steady_clock::now();
             // Calculate the duration in nanoseconds
             auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
@@ -320,14 +326,20 @@ Node* RBTree::search(const std::string& inp_word) {
             
             // Return the node if found
             std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
+            // std::cout<<"found the node,returning it!"<<std::endl;
             std::cout << "our Search time: " << duration.count() << " nanoseconds" << std::endl;
             std::cout<<"expected time is: "<<  std::log2(n) * 1e9<<std::endl;
 
             return current;
         } else if (asciiValue < currentNodeAsciiValue) {
+            std::cout<<"asciiValue < currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
+
             // If the input ASCII value is less than the current node's value, move to the left child
             current = current->left;
         } else {
+            std::cout<<"else{asciiValue > currentNodeAsciiValue}, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
+
+            
             // If the input ASCII value is greater than the current node's value, move to the right child
             current = current->right;
         }
@@ -340,9 +352,212 @@ Node* RBTree::search(const std::string& inp_word) {
     // Print the time taken
     std::cout << "Search time: " << duration.count() << " nanoseconds" << std::endl;
     // Print a message indicating the word was not found
-    std::cout << "Couldn't find the word, returning nullptr!" << std::endl;
+    std::cout << "Couldn't find the word " <<inp_word<<" in the search function, returning nullptr!" << std::endl;
     // Return nullptr if the node with the input ASCII value is not found in the tree
     return nullptr;
+}
+
+
+void RBTree::fixDeleteRBTree(Node *&node) {//fixes the properties of the tree afte the node has been removed
+    if (node == nullptr) // Check if the node is null, indicating the end of the fix-up process
+
+        return;
+
+    if (node == root) {    // If the node is the root, set the root to null and return
+        root = nullptr;
+        return;
+    }
+    // Check if the node or its children are red
+    if (getColor(node) == RED || getColor(node->left) == RED || getColor(node->right) == RED) {
+        // If so, find the child node (either left or right) which is red
+        Node *child = node->left != nullptr ? node->left : node->right;
+        //we tehn set the parent's pointer to the child node
+        if (node == node->parent->left) {
+            node->parent->left = child;
+            if (child != nullptr)
+                child->parent = node->parent;
+            setColor(child, BLACK);// Set the color of the child to black
+            delete (node); //delete the current node
+        } else {
+            node->parent->right = child;
+            if (child != nullptr)
+                child->parent = node->parent;
+            setColor(child, BLACK);// Set the color of the child to black
+            delete (node);// Delete the current node
+        }
+    } else {
+        // If the node and its children are all black,then we will start the fix-up process
+        Node *sibling = nullptr;
+        Node *parent = nullptr;
+        Node *ptr = node;
+        setColor(ptr, DOUBLE_BLACK);// Set the color of the node to double black
+        
+        // Continue the loop until the current node is not the root and its color is double black
+        while (ptr != root && getColor(ptr) == DOUBLE_BLACK) {
+            parent = ptr->parent;
+            // Determine the sibling of the current node
+            if (ptr == parent->left) {
+                sibling = parent->right;
+                if (getColor(sibling) == RED) {// Case 1: If the sibling is red
+                    setColor(sibling, BLACK);
+                    setColor(parent, RED);
+                    rotateLeft(parent);
+                } else {//sibling = parent-left
+
+                    // Case 2: If both children of the sibling are black
+                    if (getColor(sibling->left) == BLACK && getColor(sibling->right) == BLACK) {
+                        setColor(sibling, RED);// Set the color of the sibling to red
+                        if(getColor(parent) == RED)
+                            setColor(parent, BLACK);// Set the color of the parent to black
+                        else
+                            setColor(parent, DOUBLE_BLACK);// Set the color of the parent to double black
+                        ptr = parent;// Move up to the parent node
+                    } else {
+                        // Case 3: If the sibling has at least one red child
+
+                        // If the sibling's child on the opposite side of ptr is black
+                        if (getColor(sibling->right) == BLACK) {
+                            setColor(sibling->left, BLACK);
+                            setColor(sibling, RED);
+                            rotateRight(sibling);
+                            sibling = parent->right;
+                        }
+                        setColor(sibling, parent->color);
+                        setColor(parent, BLACK);
+                        setColor(sibling->right, BLACK);
+                        rotateLeft(parent);
+                        break;
+                    }
+                }
+            } else {
+                sibling = parent->left;
+                if (getColor(sibling) == RED) {
+                    setColor(sibling, BLACK);
+                    setColor(parent, RED);
+                    rotateRight(parent);
+                } else {
+                    if (getColor(sibling->left) == BLACK && getColor(sibling->right) == BLACK) {
+                        setColor(sibling, RED);
+                        if (getColor(parent) == RED)
+                            setColor(parent, BLACK);
+                        else
+                            setColor(parent, DOUBLE_BLACK);
+                        ptr = parent;
+                    } else {
+                        if (getColor(sibling->left) == BLACK) {
+                            setColor(sibling->right, BLACK);
+                            setColor(sibling, RED);
+                            rotateLeft(sibling);
+                            sibling = parent->left;
+                        }
+                        setColor(sibling, parent->color);
+                        setColor(parent, BLACK);
+                        setColor(sibling->left, BLACK);
+                        rotateRight(parent);
+                        break;
+                    }
+                }
+            }
+        }
+        if (node == node->parent->left)
+            node->parent->left = nullptr;
+        else
+            node->parent->right = nullptr;
+        delete(node);
+        setColor(root, BLACK);
+    }
+}
+
+
+
+Node* RBTree::deleteBST(Node *&root, int data) {
+    if (root == nullptr)
+        return root;
+
+    if (data < root->data)
+        return deleteBST(root->left, data);
+
+    if (data > root->data)
+        return deleteBST(root->right, data);
+
+    if (root->left == nullptr || root->right == nullptr)
+        return root;
+
+    Node *temp = minValueNode(root->right);
+    root->data = temp->data;
+    return deleteBST(root->right, temp->data);
+}
+
+Node *RBTree::minValueNode(Node *&node) {
+
+    Node *ptr = node;
+
+    while (ptr->left != nullptr)
+        ptr = ptr->left;
+
+    return ptr;
+}
+
+void RBTree::deleteValue(int data) { //this deletes the node and then fixes the REd black tree properties
+    std::cout<<"will now be deleting the node from the tree :("<<std::endl;
+    Node *node = deleteBST(root, data);
+    fixDeleteRBTree(node);
+}
+
+void RBTree::deleteWord(std::string word){
+    std::cout<<"entered the deleteWord function"<<std::endl;
+    int word_asci=0;
+    for (char c : word) {       
+        int asciiValue = static_cast<int>(c);
+        word_asci+=asciiValue;    
+    }
+    
+    Node* current=root;//pointer that starts from the root
+    Node* targetNode=nullptr;
+    while(current != nullptr && current->data != word_asci){//loop to find the node with the asci value of word
+        if(current->data < word_asci){
+            current=current->right ; //if asci of word is greater than we go to right subtree
+        }
+        else if(current->data>word_asci){
+            current=current->left;   //if asci of word is smaller than we go to left subtree  
+        }
+         
+                          
+    }
+    targetNode=current; //assinging the current node to the target node 
+
+    if(targetNode==nullptr){
+        std::cout<<"couldnt fine the node with this asci value:("<<std::endl;
+    }
+    else{
+        //this part here deals with the removal of the word from the vector of the node
+        std::string popped_word="";
+        std::vector<std::string> temp_container;
+        popped_word = std::move(targetNode->words.back()); // Moving the last element to popped_word
+        targetNode->words.pop_back(); //pop only removes the element, doesnt return anything
+
+        while(popped_word!=word){ //this pops the pops elements until the target word is not popped, then the target word is discarded
+            temp_container.push_back(popped_word);
+            popped_word = std::move(targetNode->words.back()); // Move the last element to popped_word
+            targetNode->words.pop_back();
+        }
+
+        std::string temp_container_word="";
+        while(temp_container.size()>0){ //this pushes back all the words other than the target word
+            temp_container_word=std::move(temp_container.back());
+            temp_container.pop_back();
+            targetNode->words.push_back(temp_container_word);
+        }
+        std::cout<<"word deleted now!"<<std::endl;
+
+
+    }
+
+    if(targetNode->words.size()==0){
+        deleteValue(word_asci); //if the node becomes empty then we delete that node by callin this function
+    }
+
+
 }
 
    

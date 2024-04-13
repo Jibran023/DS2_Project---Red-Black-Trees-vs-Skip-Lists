@@ -45,6 +45,15 @@ class RBTree
         int GetTreeHeight();
         int GetTreeHeightHelper(Node* node);
 
+        //deletion
+        void fixDeleteRBTree(Node *&);
+        Node* deleteBST(Node *&, int);
+        void deleteValue(int);
+        Node *minValueNode(Node *&);
+        void deleteWord(std::string word);
+
+
+
 };
 
 
