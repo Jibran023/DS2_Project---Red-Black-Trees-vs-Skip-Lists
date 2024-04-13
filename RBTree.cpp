@@ -21,6 +21,19 @@ int RBTree::GetTreeHeightHelper(Node* node) {
     return std::max(leftHeight, rightHeight) + 1;
 }
 
+int RBTree::CountNodes(Node* node) {
+    if (node == nullptr)
+        return 0;
+
+    // Recursively count the nodes in the left and right subtrees
+    int leftCount = CountNodes(node->left);
+    int rightCount = CountNodes(node->right);
+
+    // Return the total number of nodes in the subtree rooted at the current node
+    return leftCount + rightCount + 1;
+}
+
+
 int RBTree::GetTreeHeight() {
     // Start the traversal from the root node
     return GetTreeHeightHelper(root);
@@ -293,7 +306,7 @@ Node* RBTree::search(const std::string& inp_word) {
     auto start = std::chrono::steady_clock::now(); // Start the timer
 
     // Calculate the ASCII value of the input string
-    double n = GetTreeHeight(); //numbre of nodes
+    double n = CountNodes(root); //numbre of nodes
     int asciiValue = 0;
     std::cout<<"search function: asci value before calculation: "<<asciiValue<<std::endl;
 

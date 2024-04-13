@@ -51,6 +51,7 @@ class RBTree
         void deleteValue(int);
         Node *minValueNode(Node *&);
         void deleteWord(std::string word);
+        int CountNodes(Node* node);
 
 
 
