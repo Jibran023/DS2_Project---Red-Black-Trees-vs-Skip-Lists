@@ -344,7 +344,7 @@ Node* RBTree::search(const std::string& inp_word) {
         // Compare the calculated ASCII values
         if (asciiValue == currentNodeAsciiValue) {
             // Stop the timer
-            std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
+            // std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
             auto end = std::chrono::steady_clock::now();
             // Calculate the duration in nanoseconds
             auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
@@ -358,12 +358,12 @@ Node* RBTree::search(const std::string& inp_word) {
 
             return current;
         } else if (asciiValue < currentNodeAsciiValue) {
-            std::cout<<"asciiValue < currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
+            // std::cout<<"asciiValue < currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
 
             // If the input ASCII value is less than the current node's value, move to the left child
             current = current->left;
         } else {
-            std::cout<<"else{asciiValue > currentNodeAsciiValue}, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
+            // std::cout<<"else{asciiValue > currentNodeAsciiValue}, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
 
             
             // If the input ASCII value is greater than the current node's value, move to the right child

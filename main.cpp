@@ -21,11 +21,11 @@ bool isIgnoredChar(char c)
 int main(){
     RBTree tree; //the tree object
     // Open the input file
-<<<<<<< Updated upstream
-    std::string filePath = "unique_dataset/unique_sample_100words.txt";
-=======
+
+    // std::string filePath = "unique_dataset/unique_sample_100words.txt";
+
     std::string filePath = "duplicate_dataset/duplicate_small_2500words.txt";
->>>>>>> Stashed changes
+
     // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
     // Open the file for reading
@@ -70,7 +70,9 @@ int main(){
         // std::cout << "Words: ";
         
     }
-
+    //printing the total_insertion_time attribute after the entire file has been inserted, to give us the 
+    //total time taken for insertion
+    cout<<"time taken for insertion: "<<tree.total_insertion_time<<"nanoseconds"<<endl;
     
 
     //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
