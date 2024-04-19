@@ -10,7 +10,8 @@
 // #include <bits/stdc++.h>
 #include "RBTree.cpp"
 
-bool isIgnoredChar(char c) {
+bool isIgnoredChar(char c) 
+{
     // Defining the characters to ignore here
     return c == '(' || c == ')' || c=='{' || c=='}' || c=='[' || c==']' || c==',' 
         || c == '@' || c == '#' || c=='$' || c=='%' || c=='^'  || c=='*'
@@ -20,7 +21,7 @@ bool isIgnoredChar(char c) {
 int main(){
     RBTree tree; //the tree object
     // Open the input file
-    std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
+    std::string filePath = "unique_dataset/unique_sample_100words.txt";
     // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
     // Open the file for reading
