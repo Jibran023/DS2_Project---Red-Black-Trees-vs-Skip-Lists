@@ -20,7 +20,12 @@ bool isIgnoredChar(char c) {
 int main(){
     RBTree tree;
     // Open the input file
-    std::ifstream inputFile("unique_test_words.txt");
+    // std::ifstream inputFile("unique_test_words.txt");
+    // std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
+    std::string filePath = "unique_dataset/unique_large_10000words.txt";
+
+    // Open the file for reading
+    std::ifstream inputFile(filePath);
 
     if (!inputFile.is_open()) {
         std::cerr << "Error opening the file." << std::endl;
@@ -66,7 +71,7 @@ int main(){
 
     // tree.inorder();
 
-    Node* returned_node=tree.search("aaaaaaa"); //disordinance Magnetizable have asci values 1235
+    Node* returned_node=tree.search("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); //disordinance Magnetizable have asci values 1235
     // std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
     tree.print_words_on_node(returned_node);
     // tree.deleteWord("Tomboy");
