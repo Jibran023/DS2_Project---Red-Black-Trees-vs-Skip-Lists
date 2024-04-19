@@ -71,7 +71,7 @@ int main(){
     //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
     Node* returned_node=tree.search("watching"); //disordinance Magnetizable have asci values 1235
     tree.print_words_on_node(returned_node); //this prints all the words on a node
-    tree.deleteWord("watching");
+    tree.deleteWord("watching"); //deletes the word from the vector in a node
     tree.print_words_on_node(returned_node); //this prints all the words on a node
 
     // tree.print_words_on_node(returned_node);
