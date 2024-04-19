@@ -11,10 +11,10 @@ struct Node
     int data; 
     int color;//red=0 , black =1
     Node *left, *right, *parent;
-    std::string word;
+    
     std::vector<std::string> words;
 
-    explicit Node(int,std::string);  //explicit means: cannot be used for implicit conversions,stops the computer from using this function automatically in certain situations.
+    explicit Node(int);  //explicit means: cannot be used for implicit conversions,stops the computer from using this function automatically in certain situations.
 };
 
 class RBTree
@@ -32,7 +32,7 @@ class RBTree
     public:
         Node *root;
         RBTree();
-        void insertValue(int,std::string);
+        void insertValue(int n,std::string  word);
        
         void inorder();
         

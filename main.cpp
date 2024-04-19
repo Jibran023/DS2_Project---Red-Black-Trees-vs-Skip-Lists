@@ -10,78 +10,76 @@
 // #include <bits/stdc++.h>
 #include "RBTree.cpp"
 
-bool isIgnoredChar(char c) 
-{
+bool isIgnoredChar(char c) {
     // Defining the characters to ignore here
     return c == '(' || c == ')' || c=='{' || c=='}' || c=='[' || c==']' || c==',' 
         || c == '@' || c == '#' || c=='$' || c=='%' || c=='^'  || c=='*'
             || c=='!' || c == '.' || (c >= '0' && c <= '9');
 }
 
-int main()
-{
-    RBTree tree;
+int main(){
+    RBTree tree; //the tree object
     // Open the input file
-    std::ifstream inputFile("unique_test_words.txt"); // we calll the function
+    std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
+    // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
-    if (!inputFile.is_open()) 
-    {
+    // Open the file for reading
+    std::ifstream inputFile(filePath);
+
+    if (!inputFile.is_open()) {
         std::cerr << "Error opening the file." << std::endl;
         return 1; // Exit with error
     }
 
     std::string line;
-    while (std::getline(inputFile, line)) 
-    {
+    while (std::getline(inputFile, line)) {
+        // Print the original line
+
         // Tokenize the line into words
         std::istringstream iss(line);
         
         std::string word;
-        while (iss >> word) 
-        {
+        while (iss >> word) {
             // std::cout<<"the word is: "<<word<<std::endl;
             int word_asci=0;
-            for (char c : word) 
-            {
+            for (char c : word) {
                 // std::cout << c << " ";
-                if (!isIgnoredChar(c)) // we ignore the special characters
-                {
+                if (!isIgnoredChar(c)){
                     int asciiValue = static_cast<int>(c);
                     word_asci+=asciiValue;
                 }
         
             }
-
-            Node* returned_node=tree.GetTargetNode(word_asci);//we will check if the node with this asci value exists or not
-            if(returned_node!=nullptr)
-            {
-                returned_node->words.push_back(word); //if the node exists, we will push the word in the vector of that node
+            Node* returned_node=tree.GetTargetNode(word_asci);//will check if the node with this asci value exists or not
+            if(returned_node!=nullptr){
+                returned_node->words.push_back(word);
             }
-            else
-            {
-                tree.insertValue(word_asci,word); //else we create a new node to insert the word
+            else{
+                tree.insertValue(word_asci,word);
+            
             }
             // std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
         }
+
         // Print each word
-        std::cout << "Words: ";
+        // std::cout << "Words: ";
         
     }
 
-    // tree.inorder();
+    
 
-    Node* returned_node=tree.search("aaaaaaa"); //disordinance Magnetizable have asci values 1235
-    // std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
-    tree.print_words_on_node(returned_node);
-    // tree.deleteWord("Tomboy");
+    //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
+    Node* returned_node=tree.search("watching"); //disordinance Magnetizable have asci values 1235
+    tree.print_words_on_node(returned_node); //this prints all the words on a node
+    tree.deleteWord("watching"); //deletes the word from the vector in a node
+    tree.print_words_on_node(returned_node); //this prints all the words on a node
+
     // tree.print_words_on_node(returned_node);
-    // tree.deleteWord("Sumner");
 
 
     
-    //by now the node should be deleted so searching for dog should give error
     // Node* returned_node2=tree.search("Tomboy");    
-    // tree.inorder();
+    // tree.inorder(); //inorder bascially traverses the entire tree, useful for printing
 
     // tree.print_words_on_node(returned_node2);
     
