@@ -9,7 +9,8 @@ using namespace std;
 
 Node* sentinal_node = nullptr;
 
-int RBTree::GetTreeHeightHelper(Node* node) {
+int RBTree::GetTreeHeightHelper(Node* node) 
+{
     if (node == nullptr)
         return 0;
 
@@ -21,7 +22,8 @@ int RBTree::GetTreeHeightHelper(Node* node) {
     return std::max(leftHeight, rightHeight) + 1;
 }
 
-int RBTree::CountNodes(Node* node) {
+int RBTree::CountNodes(Node* node) 
+{
     if (node == nullptr)
         return 0;
 
@@ -34,13 +36,15 @@ int RBTree::CountNodes(Node* node) {
 }
 
 
-int RBTree::GetTreeHeight() {
+int RBTree::GetTreeHeight() 
+{
     // Start the traversal from the root node
     return GetTreeHeightHelper(root);
 }
 
 
-void RBTree::print_words_on_node(Node*& node){
+void RBTree::print_words_on_node(Node*& node)
+{
     std::cout<<"now printing the words on this node"<<std::endl;
     for (const auto& word : node->words) {
         std::cout << word << " ";
@@ -117,7 +121,7 @@ void RBTree::insertValue(int n,std::string inp_word)
 
     Node *node = new Node(n,inp_word);
     node->words.push_back(inp_word);
-    // std::cout<<
+
     root = insertBST(root, node);
     fixInsertRBTree(node); // After insertion, fixing the Red Black Tree properties
     std::cout<<"oki insertion done! asci value: "<<n<<" word: "<<inp_word<<std::endl;
@@ -586,10 +590,6 @@ void RBTree::deleteWord(std::string word){
     auto diff = end - start; // Calculate the difference
     std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
     std::cout<<"expected time is: "<<std::log(nodes)<<endl;
-
-
-
-
 
 }
 

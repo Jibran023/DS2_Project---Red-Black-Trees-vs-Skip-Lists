@@ -10,59 +10,63 @@
 // #include <bits/stdc++.h>
 #include "RBTree.cpp"
 
-bool isIgnoredChar(char c) {
+bool isIgnoredChar(char c) 
+{
     // Defining the characters to ignore here
     return c == '(' || c == ')' || c=='{' || c=='}' || c=='[' || c==']' || c==',' 
         || c == '@' || c == '#' || c=='$' || c=='%' || c=='^'  || c=='*'
             || c=='!' || c == '.' || (c >= '0' && c <= '9');
 }
 
-int main(){
+int main()
+{
     RBTree tree;
     // Open the input file
-    std::ifstream inputFile("unique_test_words.txt");
+    std::ifstream inputFile("unique_test_words.txt"); // we calll the function
 
-    if (!inputFile.is_open()) {
+    if (!inputFile.is_open()) 
+    {
         std::cerr << "Error opening the file." << std::endl;
         return 1; // Exit with error
     }
 
     std::string line;
-    while (std::getline(inputFile, line)) {
-        // Print the original line
-
+    while (std::getline(inputFile, line)) 
+    {
         // Tokenize the line into words
         std::istringstream iss(line);
         
         std::string word;
-        while (iss >> word) {
+        while (iss >> word) 
+        {
             // std::cout<<"the word is: "<<word<<std::endl;
             int word_asci=0;
-            for (char c : word) {
+            for (char c : word) 
+            {
                 // std::cout << c << " ";
-                if (!isIgnoredChar(c)){
+                if (!isIgnoredChar(c)) // we ignore the special characters
+                {
                     int asciiValue = static_cast<int>(c);
                     word_asci+=asciiValue;
                 }
         
             }
-            Node* returned_node=tree.GetTargetNode(word_asci);//will check if the node with this asci value exists or not
-            if(returned_node!=nullptr){
-                returned_node->words.push_back(word);
+
+            Node* returned_node=tree.GetTargetNode(word_asci);//we will check if the node with this asci value exists or not
+            if(returned_node!=nullptr)
+            {
+                returned_node->words.push_back(word); //if the node exists, we will push the word in the vector of that node
             }
-            else{
-                tree.insertValue(word_asci,word);
-            
+            else
+            {
+                tree.insertValue(word_asci,word); //else we create a new node to insert the word
             }
             // std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
         }
-
         // Print each word
         std::cout << "Words: ";
         
     }
-
-    
 
     // tree.inorder();
 
