@@ -32,8 +32,11 @@ class RBTree
         int getColor(Node *&);
         void setColor(Node *&, int);
         Node* insertBST(Node *&, Node *&);
+
+
     public:
         Node *root;
+        float total_insertion_time;
         RBTree();
         void insertValue(int n,std::string  word);
        

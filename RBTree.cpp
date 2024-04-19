@@ -77,6 +77,7 @@ Node::Node(int data) //constructor for a node
 RBTree::RBTree() //constructor for the RBTree class 
 { 
     root = nullptr;
+    total_insertion_time=0; // settin the total insertion time to zero when the tree is created
 }
 
 int RBTree::getColor(Node *&node) 
@@ -123,7 +124,9 @@ void RBTree::insertValue(int n,std::string inp_word)
     std::cout<<"Insertion done! ASCII value: " << n << " || Word: " << inp_word << std::endl;
     auto end = std::chrono::steady_clock::now(); // End the timer
     auto diff = end - start; // Calculate the difference
-    std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
+    total_insertion_time += std::chrono::duration <double, std::nano>(diff).count(); //addin the time taken for inseting 
+
+    // std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
     std::cout<<"expected time is: "<<  std::log(nodes) * 1e9<<std::endl;
 
 

@@ -21,7 +21,11 @@ bool isIgnoredChar(char c)
 int main(){
     RBTree tree; //the tree object
     // Open the input file
+<<<<<<< Updated upstream
     std::string filePath = "unique_dataset/unique_sample_100words.txt";
+=======
+    std::string filePath = "duplicate_dataset/duplicate_small_2500words.txt";
+>>>>>>> Stashed changes
     // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
     // Open the file for reading
