@@ -18,11 +18,10 @@ bool isIgnoredChar(char c) {
 }
 
 int main(){
-    RBTree tree;
+    RBTree tree; //the tree object
     // Open the input file
-    // std::ifstream inputFile("unique_test_words.txt");
-    // std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
-    std::string filePath = "unique_dataset/unique_large_10000words.txt";
+    std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
+    // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
     // Open the file for reading
     std::ifstream inputFile(filePath);
@@ -69,20 +68,16 @@ int main(){
 
     
 
-    // tree.inorder();
-
-    Node* returned_node=tree.search("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); //disordinance Magnetizable have asci values 1235
-    // std::cout<<"the word on the returned node is: "<<returned_node->word<<std::endl;
-    tree.print_words_on_node(returned_node);
-    // tree.deleteWord("Tomboy");
+    //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
+    Node* returned_node=tree.search("watching"); //disordinance Magnetizable have asci values 1235
+    tree.print_words_on_node(returned_node); //this prints all the words on a node
     // tree.print_words_on_node(returned_node);
     // tree.deleteWord("Sumner");
 
 
     
-    //by now the node should be deleted so searching for dog should give error
     // Node* returned_node2=tree.search("Tomboy");    
-    // tree.inorder();
+    // tree.inorder(); //inorder bascially traverses the entire tree, useful for printing
 
     // tree.print_words_on_node(returned_node2);
     

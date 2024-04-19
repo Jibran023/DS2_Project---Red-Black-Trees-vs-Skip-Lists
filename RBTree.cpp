@@ -65,13 +65,13 @@ Node* RBTree::GetTargetNode(int inp_asci) {
 
 
 
-Node::Node(int data,std::string inp_word) //constructor for a node
+Node::Node(int data) //constructor for a node
 { 
     this->data = data;
     color = RED;
     parent = nullptr; //Initialize parent pointers as nullptr
     left = right = sentinal_node;  //making the left and right pointer point to the sentinal
-    word=inp_word;
+    // word=inp_word;
 }
 
 RBTree::RBTree() //constructor for the RBTree class 
@@ -115,7 +115,7 @@ void RBTree::insertValue(int n,std::string inp_word)
     int nodes=CountNodes(root);
     auto start = std::chrono::steady_clock::now(); // Start the timer
 
-    Node *node = new Node(n,inp_word);
+    Node *node = new Node(n);
     node->words.push_back(inp_word);
     // std::cout<<
     root = insertBST(root, node);
@@ -296,8 +296,9 @@ void RBTree::inorderBST(Node *&ptr) { //for traversing and printing the data
         return;
 
     inorderBST(ptr->left);
+    print_words_on_node(ptr);
     // cout << ptr->data << " " << ptr->color << endl;
-    cout<<"ASCI value is: "<<ptr->data<<" and the word stored is: "<<ptr->word<<endl;
+    // cout<<"ASCI value is: "<<ptr->data<<" and the word stored is: "<<ptr->word<<endl;
     inorderBST(ptr->right);
 }
 
@@ -347,7 +348,7 @@ Node* RBTree::search(const std::string& inp_word) {
             // Print the time taken
             
             // Return the node if found
-            std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
+            // std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
             // std::cout<<"found the node,returning it!"<<std::endl;
             std::cout << "our Search time: " << duration.count() << " nanoseconds" << std::endl;
             std::cout<<"expected time is: "<<  std::log(n) * 1e9<<std::endl;
