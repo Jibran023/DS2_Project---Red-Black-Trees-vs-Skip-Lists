@@ -111,13 +111,22 @@ Node* RBTree::insertBST(Node *&root, Node *&ptr) {
 
 // Function to insert a value into the Red Black Tree
 void RBTree::insertValue(int n,std::string inp_word) 
-{
+{   
+    int nodes=CountNodes(root);
+    auto start = std::chrono::steady_clock::now(); // Start the timer
+
     Node *node = new Node(n,inp_word);
     node->words.push_back(inp_word);
     // std::cout<<
     root = insertBST(root, node);
     fixInsertRBTree(node); // After insertion, fixing the Red Black Tree properties
     std::cout<<"oki insertion done! asci value: "<<n<<" word: "<<inp_word<<std::endl;
+    auto end = std::chrono::steady_clock::now(); // End the timer
+    auto diff = end - start; // Calculate the difference
+    std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
+    std::cout<<"expected time is: "<<  std::log(nodes) * 1e9<<std::endl;
+
+
 }
 
 
@@ -341,7 +350,7 @@ Node* RBTree::search(const std::string& inp_word) {
             std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
             // std::cout<<"found the node,returning it!"<<std::endl;
             std::cout << "our Search time: " << duration.count() << " nanoseconds" << std::endl;
-            std::cout<<"expected time is: "<<  std::log2(n) * 1e9<<std::endl;
+            std::cout<<"expected time is: "<<  std::log(n) * 1e9<<std::endl;
 
             return current;
         } else if (asciiValue < currentNodeAsciiValue) {
@@ -518,6 +527,9 @@ void RBTree::deleteValue(int data) { //this deletes the node and then fixes the 
 }
 
 void RBTree::deleteWord(std::string word){
+    int nodes=CountNodes(root);
+    auto start = std::chrono::steady_clock::now(); // Start the timer
+
     std::cout<<"entered the deleteWord function"<<std::endl;
     int word_asci=0;
     for (char c : word) {       
@@ -569,6 +581,14 @@ void RBTree::deleteWord(std::string word){
     if(targetNode->words.size()==0){
         deleteValue(word_asci); //if the node becomes empty then we delete that node by callin this function
     }
+
+    auto end = std::chrono::steady_clock::now(); // End the timer
+    auto diff = end - start; // Calculate the difference
+    std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
+    std::cout<<"expected time is: "<<std::log(nodes)<<endl;
+
+
+
 
 
 }
