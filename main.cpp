@@ -24,7 +24,7 @@ int main(){
 
     // std::string filePath = "unique_dataset/unique_sample_100words.txt";
 
-    std::string filePath = "duplicate_dataset/duplicate_small_2500words.txt";
+    std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
 
     // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
@@ -55,7 +55,7 @@ int main(){
                 }
         
             }
-            Node* returned_node=tree.GetTargetNode(word_asci);//will check if the node with this asci value exists or not
+            Node* returned_node=tree.GetTargetNode_for_insertion(word_asci);//will check if the node with this asci value exists or not
             if(returned_node!=nullptr){
                 returned_node->words.push_back(word);
             }
@@ -66,21 +66,21 @@ int main(){
             // std::cout<<"the asci value of the word is: "<<word_asci<<std::endl;
         }
 
-        // Print each word
-        // std::cout << "Words: ";
+       
         
     }
     //printing the total_insertion_time attribute after the entire file has been inserted, to give us the 
     //total time taken for insertion
-    cout<<"time taken for insertion: "<<tree.total_insertion_time<<"nanoseconds"<<endl;
+
+    cout<<"Total time taken for insertion: "<<tree.total_insertion_time<<"nanoseconds"<<endl;
     
-
-    //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
-    Node* returned_node=tree.search("watching"); //disordinance Magnetizable have asci values 1235
+    // cout<<"total nodes in tree: "<<tree.CountNodes(tree.root);
+    // //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
+    Node* returned_node=tree.search("supercalifragilisticexpialidocious"); //disordinance Magnetizable have asci values 1235
     tree.print_words_on_node(returned_node); //this prints all the words on a node
-    tree.deleteWord("watching"); //deletes the word from the vector in a node
+    tree.deleteWord("supercalifragilisticexpialidocious"); //deletes the word from the vector in a node
     tree.print_words_on_node(returned_node); //this prints all the words on a node
-
+    // tree.inorder();
     // tree.print_words_on_node(returned_node);
 
 

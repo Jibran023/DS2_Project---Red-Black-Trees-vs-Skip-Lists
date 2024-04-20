@@ -37,13 +37,14 @@ class RBTree
     public:
         Node *root;
         float total_insertion_time;
+        float node_deletion_time;
         RBTree();
         void insertValue(int n,std::string  word);
        
         void inorder();
         
         Node* search(const std::string& inp_word);
-        Node* GetTargetNode(int asci);
+        Node* GetTargetNode_for_insertion(int asci);
         void print_words_on_node(Node*&  node);
         int GetTreeHeight();
         int GetTreeHeightHelper(Node* node);

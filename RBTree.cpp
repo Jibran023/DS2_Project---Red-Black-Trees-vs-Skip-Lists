@@ -2,6 +2,8 @@
 #include "RBTree.h"
 #include <utility>// For swap function
 #include <chrono> //for measuring the time intervals
+#include <ctime> //for meeasuring time interval too
+
 #include <cmath>
 using namespace std;
 
@@ -30,6 +32,7 @@ int RBTree::CountNodes(Node* node) {
     int rightCount = CountNodes(node->right);
 
     // Return the total number of nodes in the subtree rooted at the current node
+    // cout<<"cuount nodes function ended heheh!!"<<endl;
     return leftCount + rightCount + 1;
 }
 
@@ -48,7 +51,9 @@ void RBTree::print_words_on_node(Node*& node){
     std::cout << std::endl;
 }
 
-Node* RBTree::GetTargetNode(int inp_asci) {
+Node* RBTree::GetTargetNode_for_insertion(int inp_asci) {
+    std::clock_t start = std::clock(); // Start the timer
+    
     Node* current = root;
     while (current != nullptr) {
         if (current->data == inp_asci) {
@@ -59,8 +64,14 @@ Node* RBTree::GetTargetNode(int inp_asci) {
             current = current->left; // Move to the left child
         }
     }
-    std::cout<<"couldnt find the node with the asci value "<<inp_asci<<std::endl;
-    return nullptr; // Node not found
+    std::clock_t end = std::clock();
+    double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
+    diff=diff * 1e9;
+    if(current!=nullptr){ //if a node is found
+        total_insertion_time+=diff;
+    }
+    // std::cout<<"couldnt find the node with the asci value "<<inp_asci<<std::endl;
+    return current; // if node not found, then current will be nullptr, so nullptr will be returned
 }
 
 
@@ -77,6 +88,7 @@ Node::Node(int data) //constructor for a node
 RBTree::RBTree() //constructor for the RBTree class 
 { 
     root = nullptr;
+    node_deletion_time=0; //time for deletion of a node, includes time for fixing properties after deletion
     total_insertion_time=0; // settin the total insertion time to zero when the tree is created
 }
 
@@ -114,20 +126,25 @@ Node* RBTree::insertBST(Node *&root, Node *&ptr) {
 void RBTree::insertValue(int n,std::string inp_word) 
 {   
     int nodes=CountNodes(root);
-    auto start = std::chrono::steady_clock::now(); // Start the timer
+    // auto start = std::chrono::steady_clock::now(); // Start the timer
+    std::clock_t start = std::clock(); // Start the timer
 
     Node *node = new Node(n);
     node->words.push_back(inp_word);
     // std::cout<<
     root = insertBST(root, node);
     fixInsertRBTree(node); // After insertion, fixing the Red Black Tree properties
-    std::cout<<"Insertion done! ASCII value: " << n << " || Word: " << inp_word << std::endl;
-    auto end = std::chrono::steady_clock::now(); // End the timer
-    auto diff = end - start; // Calculate the difference
-    total_insertion_time += std::chrono::duration <double, std::nano>(diff).count(); //addin the time taken for inseting 
+    // std::cout<<"Insertion done! ASCII value: " << n << " || Word: " << inp_word << std::endl;
+    // auto end = std::chrono::steady_clock::now(); // End the timer
+    std::clock_t end = std::clock(); // End the timer
+    // auto diff = end - start; // Calculate the difference
+    double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
+
+    // total_insertion_time += std::chrono::duration <double, std::nano>(diff).count(); //addin the time taken for inseting 
+    total_insertion_time += diff * 1e9; // Convert seconds to nanoseconds and add to total_insertion_time
 
     // std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
-    std::cout<<"expected time is: "<<  std::log(nodes) * 1e9<<std::endl;
+    std::cout<<"expected insertion time is: "<<  std::log(nodes) * 1e9<<std::endl;
 
 
 }
@@ -316,17 +333,18 @@ void RBTree::inorder() {
 
 
 Node* RBTree::search(const std::string& inp_word) {
-    auto start = std::chrono::steady_clock::now(); // Start the timer
+    std::clock_t start = std::clock(); // Start the timer
+    cout<<"search start time: "<<start<<endl;
 
     // Calculate the ASCII value of the input string
     double n = CountNodes(root); //numbre of nodes
     int asciiValue = 0;
-    std::cout<<"search function: asci value before calculation: "<<asciiValue<<std::endl;
+    // std::cout<<"search function: asci value before calculation: "<<asciiValue<<std::endl;
 
     for (char c : inp_word) {
         asciiValue += static_cast<int>(c);
     }
-    std::cout<<"search function: asci value after calculation: "<<asciiValue<<std::endl;
+    // std::cout<<"search function: asci value after calculation: "<<asciiValue<<std::endl;
 
 
 
@@ -345,16 +363,17 @@ Node* RBTree::search(const std::string& inp_word) {
         if (asciiValue == currentNodeAsciiValue) {
             // Stop the timer
             // std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
-            auto end = std::chrono::steady_clock::now();
+            std::clock_t end = std::clock();
+            cout<<"search end time: "<<end<<endl;
             // Calculate the duration in nanoseconds
-            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+            double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
             // Print the time taken
             
             // Return the node if found
             // std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
             // std::cout<<"found the node,returning it!"<<std::endl;
-            std::cout << "our Search time: " << duration.count() << " nanoseconds" << std::endl;
-            std::cout<<"expected time is: "<<  std::log(n) * 1e9<<std::endl;
+            std::cout << "our Search time: " << diff * 1e9 << " nanoseconds" << std::endl;
+            std::cout << "expected search time is: " << std::log(n) * 1e9 << " nanoseconds" << std::endl;
 
             return current;
         } else if (asciiValue < currentNodeAsciiValue) {
@@ -372,13 +391,13 @@ Node* RBTree::search(const std::string& inp_word) {
     }
 
     // Stop the timer
-    auto end = std::chrono::steady_clock::now();
+    std::clock_t end = std::clock();
     // Calculate the duration in nanoseconds
-    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
     // Print the time taken
-    std::cout << "Search time: " << duration.count() << " nanoseconds" << std::endl;
+    std::cout << "Search time: " << diff * 1e9 << " nanoseconds" << std::endl;
     // Print a message indicating the word was not found
-    std::cout << "Couldn't find the word " <<inp_word<<" in the search function, returning nullptr!" << std::endl;
+    std::cout << "Couldn't find the word " << inp_word << " in the search function, returning nullptr!" << std::endl;
     // Return nullptr if the node with the input ASCII value is not found in the tree
     return nullptr;
 }
@@ -525,14 +544,21 @@ Node *RBTree::minValueNode(Node *&node) {
 }
 
 void RBTree::deleteValue(int data) { //this deletes the node and then fixes the REd black tree properties
+    std::clock_t start = std::clock(); // Start the timer
+
     std::cout<<"will now be deleting the node from the tree :("<<std::endl;
     Node *node = deleteBST(root, data);
     fixDeleteRBTree(node);
+
+    std::clock_t end = std::clock(); // End the timer
+    double diff = (end - start) * 1.0 / CLOCKS_PER_SEC;
+    diff=diff * 1e9;
+    node_deletion_time=diff; //time taken to delete the node
 }
 
 void RBTree::deleteWord(std::string word){
     int nodes=CountNodes(root);
-    auto start = std::chrono::steady_clock::now(); // Start the timer
+    std::clock_t start = std::clock(); // Start the timer
 
     std::cout<<"entered the deleteWord function"<<std::endl;
     int word_asci=0;
@@ -581,15 +607,19 @@ void RBTree::deleteWord(std::string word){
 
 
     }
-
+    float total_deletion_time=0;
     if(targetNode->words.size()==0){
         deleteValue(word_asci); //if the node becomes empty then we delete that node by callin this function
+        total_deletion_time=total_deletion_time+node_deletion_time;
     }
 
-    auto end = std::chrono::steady_clock::now(); // End the timer
-    auto diff = end - start; // Calculate the difference
-    std::cout << "Time taken: " << std::chrono::duration <double, std::nano> (diff).count() << " ns" << std::endl;
-    std::cout<<"expected time is: "<<std::log(nodes)<<endl;
+    std::clock_t end = std::clock(); // End the timer
+    double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
+    total_deletion_time+=diff * 1e9;
+    std::cout << "deletion Time taken: " << total_deletion_time << " ns" << std::endl;
+
+    // std::cout << "deletion Time taken: " << diff * 1e9 << " ns" << std::endl;
+    std::cout << "expected deletion time is: " << std::log(nodes) << std::endl;
 
 
 
