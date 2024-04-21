@@ -334,7 +334,7 @@ void RBTree::inorder() {
 
 std::string RBTree::search(const std::string& inp_word) {
     std::clock_t start = std::clock(); // Start the timer
-    cout<<"search start time: "<<start<<endl;
+    // cout<<"search start time: "<<start<<endl;
     std::string ans="";
     // Calculate the ASCII value of the input string
     double n = CountNodes(root); //numbre of nodes
@@ -374,7 +374,7 @@ std::string RBTree::search(const std::string& inp_word) {
             // std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
             std::clock_t end = std::clock();
             cout<<endl;
-            cout<<"search end time: "<<end<<endl;
+            // cout<<"search end time: "<<end<<endl;
             // Calculate the duration in nanoseconds
             double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
             // Print the time taken
@@ -384,7 +384,9 @@ std::string RBTree::search(const std::string& inp_word) {
             // std::cout<<"found the node,returning it!"<<std::endl;
             std::cout << "our Search time: " << diff * 1e9 << " nanoseconds" << std::endl;
             std::cout << "expected search time is: " << std::log(n) * 1e9 << " nanoseconds" << std::endl;
-
+            if(ans==""){
+                cout<<"couldnt find the word!"<<endl;
+            }
             return ans;
         } else if (asciiValue < currentNodeAsciiValue) {
             // std::cout<<"asciiValue < currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
@@ -571,7 +573,7 @@ void RBTree::deleteWord(std::string word){
     int nodes=CountNodes(root);
     std::clock_t start = std::clock(); // Start the timer
 
-    std::cout<<"entered the deleteWord function"<<std::endl;
+    // std::cout<<"entered the deleteWord function"<<std::endl;
     int word_asci=0;
     for (char c : word) {       
         int asciiValue = static_cast<int>(c);
