@@ -407,7 +407,7 @@ std::string RBTree::search(const std::string& inp_word) {
     // Print the time taken
     std::cout << "Search time: " << diff * 1e9 << " nanoseconds" << std::endl;
     // Print a message indicating the word was not found
-    std::cout << "Couldn't find the word " << inp_word << " in the search function, returning nullptr!" << std::endl;
+    std::cout << "Couldn't find the word " << inp_word << " in the search function, returning empty string!" << std::endl;
     // Return nullptr if the node with the input ASCII value is not found in the tree
     return ans;
     // return nullptr;

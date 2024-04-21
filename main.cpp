@@ -24,7 +24,7 @@ int main(){
 
     // std::string filePath = "unique_dataset/unique_sample_100words.txt";
 
-    std::string filePath = "duplicate_dataset/duplicate_large_10,000words.txt";
+    std::string filePath = "duplicate_dataset/duplicate_sample_100words.txt";
 
     // std::string filePath = "unique_dataset/unique_large_10000words.txt";
 
@@ -84,7 +84,7 @@ int main(){
     // tree.print_words_on_node(returned_node);
 
     int word_asci=0;
-    std::string word="calliber";
+    std::string word="mine";
     for (char c : word) {
         // std::cout << c << " ";
         if (!isIgnoredChar(c)){
@@ -102,9 +102,9 @@ int main(){
     
     }
 
-    std::string returned_word=tree.search("calliber");
-    tree.deleteWord("calliber");
-    std::string returned_word2=tree.search("calliber");
+    std::string returned_word=tree.search("mine");
+    tree.deleteWord("mine");
+    std::string returned_word2=tree.search("mine");
     // cout<<returned_word2<<endl;
     
     // Node* returned_node2=tree.search("Tomboy");    
