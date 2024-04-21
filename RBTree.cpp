@@ -56,9 +56,9 @@ Node* RBTree::GetTargetNode_for_insertion(int inp_asci) {
     
     Node* current = root;
     while (current != nullptr) {
-        if (current->data == inp_asci) {
+        if (current->asci == inp_asci) {
             return current; // Found the node
-        } else if (current->data < inp_asci) {
+        } else if (current->asci < inp_asci) {
             current = current->right; // Move to the right child
         } else {
             current = current->left; // Move to the left child
@@ -76,9 +76,9 @@ Node* RBTree::GetTargetNode_for_insertion(int inp_asci) {
 
 
 
-Node::Node(int data) //constructor for a node
+Node::Node(int asci) //constructor for a node
 { 
-    this->data = data;
+    this->asci = asci;
     color = RED;
     parent = nullptr; //Initialize parent pointers as nullptr
     left = right = sentinal_node;  //making the left and right pointer point to the sentinal
@@ -111,10 +111,10 @@ Node* RBTree::insertBST(Node *&root, Node *&ptr) {
     if (root == nullptr)
         return ptr;
 
-    if (ptr->data < root->data) {
+    if (ptr->asci < root->asci) {
         root->left = insertBST(root->left, ptr);
         root->left->parent = root;
-    } else if (ptr->data > root->data) {
+    } else if (ptr->asci > root->asci) {
         root->right = insertBST(root->right, ptr);
         root->right->parent = root;
     }
@@ -311,14 +311,14 @@ void RBTree::fixInsertRBTree(Node *&ptr)
 }
 
 
-void RBTree::inorderBST(Node *&ptr) { //for traversing and printing the data
+void RBTree::inorderBST(Node *&ptr) { //for traversing and printing the asci
     if (ptr == nullptr)
         return;
 
     inorderBST(ptr->left);
     print_words_on_node(ptr);
-    // cout << ptr->data << " " << ptr->color << endl;
-    // cout<<"ASCI value is: "<<ptr->data<<" and the word stored is: "<<ptr->word<<endl;
+    // cout << ptr->asci << " " << ptr->color << endl;
+    // cout<<"ASCI value is: "<<ptr->asci<<" and the word stored is: "<<ptr->word<<endl;
     inorderBST(ptr->right);
 }
 
@@ -354,7 +354,7 @@ std::string RBTree::search(const std::string& inp_word) {
     // Traverse the tree to find the node with the matching ASCII value
     while (current != nullptr) {
         // Calculate the ASCII value of the word stored in the current node
-        int currentNodeAsciiValue = current->data;
+        int currentNodeAsciiValue = current->asci;
         // for (char c : current->word) {
         //     currentNodeAsciiValue += static_cast<int>(c);
         // }
@@ -380,7 +380,7 @@ std::string RBTree::search(const std::string& inp_word) {
             // Print the time taken
             
             // Return the node if found
-            // std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->data << std::endl;
+            // std::cout << "Found it! Word: " << current->word << " and the ASCII value is: " << current->asci << std::endl;
             // std::cout<<"found the node,returning it!"<<std::endl;
             std::cout << "our Search time: " << diff * 1e9 << " nanoseconds" << std::endl;
             std::cout << "expected search time is: " << std::log(n) * 1e9 << " nanoseconds" << std::endl;
@@ -528,22 +528,22 @@ void RBTree::fixDeleteRBTree(Node *&node) {//fixes the properties of the tree af
 
 
 
-Node* RBTree::deleteBST(Node *&root, int data) {
+Node* RBTree::deleteBST(Node *&root, int asci) {
     if (root == nullptr)
         return root;
 
-    if (data < root->data)
-        return deleteBST(root->left, data);
+    if (asci < root->asci)
+        return deleteBST(root->left, asci);
 
-    if (data > root->data)
-        return deleteBST(root->right, data);
+    if (asci > root->asci)
+        return deleteBST(root->right, asci);
 
     if (root->left == nullptr || root->right == nullptr)
         return root;
 
     Node *temp = minValueNode(root->right);
-    root->data = temp->data;
-    return deleteBST(root->right, temp->data);
+    root->asci = temp->asci;
+    return deleteBST(root->right, temp->asci);
 }
 
 Node *RBTree::minValueNode(Node *&node) {
@@ -556,11 +556,11 @@ Node *RBTree::minValueNode(Node *&node) {
     return ptr;
 }
 
-void RBTree::deleteValue(int data) { //this deletes the node and then fixes the REd black tree properties
+void RBTree::deleteValue(int asci) { //this deletes the node and then fixes the REd black tree properties
     std::clock_t start = std::clock(); // Start the timer
 
     std::cout<<"will now be deleting the node from the tree :("<<std::endl;
-    Node *node = deleteBST(root, data);
+    Node *node = deleteBST(root, asci);
     fixDeleteRBTree(node);
 
     std::clock_t end = std::clock(); // End the timer
@@ -582,11 +582,11 @@ void RBTree::deleteWord(std::string word){
     
     Node* current=root;//pointer that starts from the root
     Node* targetNode=nullptr;
-    while(current != nullptr && current->data != word_asci){//loop to find the node with the asci value of word
-        if(current->data < word_asci){
+    while(current != nullptr && current->asci != word_asci){//loop to find the node with the asci value of word
+        if(current->asci < word_asci){
             current=current->right ; //if asci of word is greater than we go to right subtree
         }
-        else if(current->data>word_asci){
+        else if(current->asci>word_asci){
             current=current->left;   //if asci of word is smaller than we go to left subtree  
         }
          

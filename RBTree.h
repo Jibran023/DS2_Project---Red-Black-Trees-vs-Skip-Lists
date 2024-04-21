@@ -11,7 +11,7 @@ enum Color {RED, BLACK, DOUBLE_BLACK};
 
 struct Node
 {
-    int data; 
+    int asci; 
     int color;//red=0 , black =1
     Node *left, *right, *parent;
     
@@ -23,7 +23,7 @@ struct Node
 class RBTree
 {
             
-    protected:
+    public:
         void rotateLeft(Node *&);
         void rotateRight(Node *&);
         void fixInsertRBTree(Node *&);
@@ -34,7 +34,7 @@ class RBTree
         Node* insertBST(Node *&, Node *&);
 
 
-    public:
+    
         Node *root;
         float total_insertion_time;
         float node_deletion_time;
