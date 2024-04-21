@@ -76,14 +76,36 @@ int main(){
     
     // cout<<"total nodes in tree: "<<tree.CountNodes(tree.root);
     // //this search function looks for the node that has the aci value as that of its parameter and then returns that node when it finds it
-    Node* returned_node=tree.search("supercalifragilisticexpialidocious"); //disordinance Magnetizable have asci values 1235
-    tree.print_words_on_node(returned_node); //this prints all the words on a node
-    tree.deleteWord("supercalifragilisticexpialidocious"); //deletes the word from the vector in a node
-    tree.print_words_on_node(returned_node); //this prints all the words on a node
+    // Node* returned_node=tree.search("supercalifragilisticexpialidocious"); //disordinance Magnetizable have asci values 1235
+    // tree.print_words_on_node(returned_node); //this prints all the words on a node
+    // tree.deleteWord("supercalifragilisticexpialidocious"); //deletes the word from the vector in a node
+    // tree.print_words_on_node(returned_node); //this prints all the words on a node
     // tree.inorder();
     // tree.print_words_on_node(returned_node);
 
+    int word_asci=0;
+    std::string word="calliber";
+    for (char c : word) {
+        // std::cout << c << " ";
+        if (!isIgnoredChar(c)){
+            int asciiValue = static_cast<int>(c);
+            word_asci+=asciiValue;
+        }
 
+    }
+    Node* returned_node=tree.GetTargetNode_for_insertion(word_asci);//will check if the node with this asci value exists or not
+    if(returned_node!=nullptr){
+        returned_node->words.push_back(word);
+    }
+    else{
+        tree.insertValue(word_asci,word);
+    
+    }
+
+    std::string returned_word=tree.search("calliber");
+    tree.deleteWord("online");
+    std::string returned_word2=tree.search("calliber");
+    // cout<<returned_word2<<endl;
     
     // Node* returned_node2=tree.search("Tomboy");    
     // tree.inorder(); //inorder bascially traverses the entire tree, useful for printing

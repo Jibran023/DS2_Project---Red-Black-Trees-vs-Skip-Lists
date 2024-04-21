@@ -332,10 +332,10 @@ void RBTree::inorder() {
 
 
 
-Node* RBTree::search(const std::string& inp_word) {
+std::string RBTree::search(const std::string& inp_word) {
     std::clock_t start = std::clock(); // Start the timer
     cout<<"search start time: "<<start<<endl;
-
+    std::string ans="";
     // Calculate the ASCII value of the input string
     double n = CountNodes(root); //numbre of nodes
     int asciiValue = 0;
@@ -360,7 +360,16 @@ Node* RBTree::search(const std::string& inp_word) {
         // }
 
         // Compare the calculated ASCII values
+
         if (asciiValue == currentNodeAsciiValue) {
+            for (const auto& word : current->words) {
+                // cout<<word<<endl;
+                if(word==inp_word){
+                    ans=word;
+                    // break;
+                }
+            }
+            print_words_on_node(current);
             // Stop the timer
             // std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
             std::clock_t end = std::clock();
@@ -375,7 +384,7 @@ Node* RBTree::search(const std::string& inp_word) {
             std::cout << "our Search time: " << diff * 1e9 << " nanoseconds" << std::endl;
             std::cout << "expected search time is: " << std::log(n) * 1e9 << " nanoseconds" << std::endl;
 
-            return current;
+            return ans;
         } else if (asciiValue < currentNodeAsciiValue) {
             // std::cout<<"asciiValue < currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
 
@@ -399,7 +408,8 @@ Node* RBTree::search(const std::string& inp_word) {
     // Print a message indicating the word was not found
     std::cout << "Couldn't find the word " << inp_word << " in the search function, returning nullptr!" << std::endl;
     // Return nullptr if the node with the input ASCII value is not found in the tree
-    return nullptr;
+    return ans;
+    // return nullptr;
 }
 
 
