@@ -103,7 +103,7 @@ int main(){
     }
 
     std::string returned_word=tree.search("calliber");
-    tree.deleteWord("online");
+    tree.deleteWord("calliber");
     std::string returned_word2=tree.search("calliber");
     // cout<<returned_word2<<endl;
     

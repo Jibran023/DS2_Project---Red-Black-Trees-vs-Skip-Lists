@@ -363,16 +363,17 @@ std::string RBTree::search(const std::string& inp_word) {
 
         if (asciiValue == currentNodeAsciiValue) {
             for (const auto& word : current->words) {
-                // cout<<word<<endl;
+                cout<<word<<" ,";
                 if(word==inp_word){
                     ans=word;
-                    // break;
+                    break;
                 }
             }
-            print_words_on_node(current);
+            // print_words_on_node(current);
             // Stop the timer
             // std::cout<<"asciiValue == currentNodeAsciiValue, asciivalue="<<asciiValue<<" currentnodeascivalue="<<currentNodeAsciiValue<<std::endl;
             std::clock_t end = std::clock();
+            cout<<endl;
             cout<<"search end time: "<<end<<endl;
             // Calculate the duration in nanoseconds
             double diff = (end - start) * 1.0 / CLOCKS_PER_SEC; // Calculate the difference in seconds
