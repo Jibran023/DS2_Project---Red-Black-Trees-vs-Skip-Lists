@@ -1,3 +1,4 @@
-Database: https://github.com/benjihillard/English-Dictionary-Database
+Database: https://github.com/benjihillard/English-Dictionary-Database ,
+https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears.txt
 
 Theory for Red Black Trees: https://dl.ebooksworld.ir/books/Introduction.to.Algorithms.4th.Leiserson.Stein.Rivest.Cormen.MIT.Press.9780262046305.EBooksWorld.ir.pdf

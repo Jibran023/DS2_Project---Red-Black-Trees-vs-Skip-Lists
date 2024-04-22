@@ -1,7 +1,7 @@
 #include <iostream>
 #include "RBTree.h"
 #include <utility>// For swap function
-#include <chrono> //for measuring the time intervals
+// #include <chrono> //for measuring the time intervals
 #include <ctime> //for meeasuring time interval too
 
 #include <cmath>
@@ -417,11 +417,11 @@ std::string RBTree::search(const std::string& inp_word) {
 
 
 void RBTree::fixDeleteRBTree(Node *&node) {//fixes the properties of the tree afte the node has been removed
-    if (node == nullptr) // Check if the node is null, indicating the end of the fix-up process
+    if (node == nullptr)// If the node is null,it indicating the end of the fix-up process
 
         return;
 
-    if (node == root) {    // If the node is the root, set the root to null and return
+    if (node == root) {    /// If the node is the root, set the root to null and return
         root = nullptr;
         return;
     }
@@ -429,6 +429,7 @@ void RBTree::fixDeleteRBTree(Node *&node) {//fixes the properties of the tree af
     if (getColor(node) == RED || getColor(node->left) == RED || getColor(node->right) == RED) {
         // If so, find the child node (either left or right) which is red
         Node *child = node->left != nullptr ? node->left : node->right;
+         // Case 1: If the node or its children are red
         //we tehn set the parent's pointer to the child node
         if (node == node->parent->left) {
             node->parent->left = child;
