@@ -1,3 +1,6 @@
-for compiling:  g++ main.cpp -o a.exe
+for compiling RBTree:  g++ main.cpp -o a.exe
+for running RBTree: .\a.exe
 
-for running: .\a.exe
+
+for compiling skiplist: g++ .\Skip_list_run.cpp
+for running the executable file : .\a.exe
